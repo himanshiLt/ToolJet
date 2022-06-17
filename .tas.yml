@@ -1,0 +1,19 @@
+---
+framework: jest
+preRun:
+     command:
+        - cd plugins
+        - npm install
+        - npm run build
+preMerge:
+  pattern:
+    - "./plugins/packages/*/__tests__/*.js"
+postMerge:
+  env:
+      NODE_ENV: test
+  pattern: 
+    - "./plugins/packages/*/__tests__/*.js"
+postRun:
+     command:
+        - node --version
+version: 1.0
