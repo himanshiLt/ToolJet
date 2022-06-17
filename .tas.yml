@@ -2,17 +2,28 @@
 framework: jest
 preRun:
      command:
-        - cd plugins
-        - npm install
-        - npm run build
-preMerge:
-  pattern:
-    - "./plugins/packages/*/__tests__/*.js"
+        - apt update && apt install -y postgresql
+        - npm i -g npm@7.20.0
+        - npm --prefix plugins ci
+        - npm --prefix plugins run create:client && npm --prefix plugins run create:server
+        - npm --prefix plugins run build:packages && npm --prefix plugins run build:server
+        - npm --prefix server ci
+        - npm --prefix server run db:create
+        - npm --prefix server run db:migrate
 postMerge:
+  pattern:
+    - "./test/services/*.spec.ts
   env:
-      NODE_ENV: test
-  pattern: 
-    - "./plugins/packages/*/__tests__/*.js"
+    FORCE_COLOR: true
+    NODE_OPTIONS: --max-old-space-size=4096
+    LOCKBOX_MASTER_KEY: lockbox-master-key
+    SECRET_KEY_BASE: secrret-key-base
+    NODE_ENV: test
+    PG_HOST: postgres
+    PG_PORT: 5432
+    PG_USER: postgres
+    PG_PASS: postgres
+    PG_DB: tooljet_test
 postRun:
      command:
         - node --version
