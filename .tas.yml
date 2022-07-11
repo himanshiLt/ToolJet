@@ -61,7 +61,8 @@ postMerge:
             - apt install postgresql sudo -y
             - apt install postgresql-contrib build-essential -y
             - /etc/init.d/postgresql start
-#             - sudo psql ALTER USER postgres PASSWORD 'postgres';
+            - echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/9.3/main/pg_hba.conf
+            - psql ALTER USER postgres PASSWORD 'postgres';
 #             - su -c "psql -c \"ALTER USER postgres PASSWORD 'postgres';\"" postgres
 #             - npm i -g npm@7.20.0
             - npm install
