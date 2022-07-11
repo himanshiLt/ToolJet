@@ -67,6 +67,7 @@ postMerge:
 #             - npm install jest-cli
             - npm run db:create
             - npm run db:migrate
+            - exit
 #             - rm -rf /usr/local/bin/bundle
 #             - touch /usr/local/bin/bundle
             # - rm -rf /usr/local/bin/bundle
