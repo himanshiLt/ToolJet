@@ -67,6 +67,8 @@ postMerge:
 #             - npm install jest-cli
             - npm run db:create
             - npm run db:migrate
+            - rm -rf /usr/local/bin/bundle
+            - touch /usr/local/bin/bundle
             # - rm -rf /usr/local/bin/bundle
             # - npm install yjs
             # - npm install -g yjs
