@@ -17,7 +17,7 @@ postMerge:
        POSTGRES_PASSWORD: postgres
        NODE_ENV: test
      command:
-        - cp /usr/local/bin/bundle /home/nucleus/bundle
+#         - cp /usr/local/bin/bundle /home/nucleus/bundle
         - apt update
         - apt install build-essential -y
         # - apt install postgresql -y
@@ -67,7 +67,7 @@ postMerge:
 #             - npm install jest-cli
             - npm run db:create
             - npm run db:migrate
-            - cp /home/nucleus/bundle /usr/local/bin/bundle
+            - du -sh /usr/local/bin/bundle
             # - rm -rf /usr/local/bin/bundle
             # - npm install yjs
             # - npm install -g yjs
