@@ -60,7 +60,7 @@ postMerge:
 #             - cp /usr/local/bin/bundle /home/nucleus/bundle
             - apt install postgresql-13 sudo -y
             - apt install build-essential -y
-            - echo "local all  all  trust" >> /etc/postgresql/13/main/pg_hba.conf
+            - sed -i 's/peer/trust/'  /etc/postgresql/13/main/pg_hba.conf
             - /etc/init.d/postgresql start
 #             - psql ALTER USER postgres PASSWORD 'postgres';
 #             - su -c "psql -c \"ALTER USER postgres PASSWORD 'postgres';\"" postgres
