@@ -11,10 +11,10 @@ postMerge:
        SECRET_KEY_BASE: secrret-key-base
        PG_HOST: localhost
        PG_PORT: 5432
-       PG_USER: tas
-       PG_PASS: tas
+       PG_USER: postgres
+       PG_PASS: postgres
        PG_DB: tooljet_test
-       POSTGRES_PASSWORD: tas
+       POSTGRES_PASSWORD: postgres
        NODE_ENV: test
      command:
 #         - cp /usr/local/bin/bundle /home/nucleus/bundle
@@ -51,10 +51,10 @@ postMerge:
             SECRET_KEY_BASE: secrret-key-base
             PG_HOST: localhost
             PG_PORT: 5432
-            PG_USER: tas
-            PG_PASS: tas
+            PG_USER: postgres
+            PG_PASS: postgres
             PG_DB: tooljet_test
-            POSTGRES_PASSWORD: tas
+            POSTGRES_PASSWORD: postgres
             NODE_ENV: test
           command:
 #             - cp /usr/local/bin/bundle /home/nucleus/bundle
@@ -62,7 +62,7 @@ postMerge:
             - apt install build-essential -y
             - sed -i 's/peer/trust/'  /etc/postgresql/13/main/pg_hba.conf
             - /etc/init.d/postgresql start
-            - sudo -u postgres psql -c "CREATE USER tas WITH SUPERUSER PASSWORD 'tas';"
+#             - sudo -u postgres psql -c "CREATE USER tas WITH SUPERUSER PASSWORD 'tas';"
 #             - CREATE USER runner WITH PASSWORD '$password' CREATEDB;
 #             - psql ALTER USER postgres PASSWORD 'postgres';
 #             - su -c "psql -c \"ALTER USER postgres PASSWORD 'postgres';\"" postgres
@@ -71,7 +71,7 @@ postMerge:
 #             - npm install jest-cli
             - npm run db:create
             - npm run db:migrate
-            - sudo -u root ls
+#             - sudo -u root ls
 #             - rm -rf /usr/local/bin/bundle
 #             - touch /usr/local/bin/bundle
             # - rm -rf /usr/local/bin/bundle
