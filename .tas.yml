@@ -11,10 +11,10 @@ postMerge:
        SECRET_KEY_BASE: secrret-key-base
        PG_HOST: localhost
        PG_PORT: 5432
-       PG_USER: tas
-       PG_PASS: tas
+       PG_USER: postgres
+       PG_PASS: postgres
        PG_DB: tooljet_test
-       POSTGRES_PASSWORD: tas
+       POSTGRES_PASSWORD: postgres
        NODE_ENV: test
      command:
 #         - cp /usr/local/bin/bundle /home/nucleus/bundle
@@ -51,10 +51,10 @@ postMerge:
             SECRET_KEY_BASE: secrret-key-base
             PG_HOST: localhost
             PG_PORT: 5432
-            PG_USER: tas
-            PG_PASS: tas
+            PG_USER: postgres
+            PG_PASS: postgres
             PG_DB: tooljet_test
-            POSTGRES_PASSWORD: tas
+            POSTGRES_PASSWORD: postgres
             NODE_ENV: test
           command:
             - chmod 777 /usr/local/bin/bundle
