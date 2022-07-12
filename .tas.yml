@@ -17,6 +17,7 @@ postMerge:
        POSTGRES_PASSWORD: postgres
        NODE_ENV: test
      command:
+        - /usr/local/bin/bundle --ping
         - apt update
         - apt install build-essential -y
         - npm i -g npm@7.20.0
