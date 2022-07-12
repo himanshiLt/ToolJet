@@ -30,8 +30,7 @@ postMerge:
         path : "./server"
         smartRun: false
         pattern: 
-          - "./test/controllers/*.ts"
-          - "./test/services/*.ts"
+          - "./test/**/*.ts"
         framework : jest
         runPreRunEveryTime: true
         preRun:
@@ -54,5 +53,5 @@ postMerge:
             - npm install
             - npm run db:create
             - npm run db:migrate
-        configFile : "./jest.config.ts"
+        configFile : "./test/jest-e2e.json"
 
