@@ -26,35 +26,7 @@ postMerge:
         - npm --prefix plugins run build:packages && npm --prefix plugins run build:server
         - npm --prefix server install
   subModules:
-      - name: e2e-tests      
-        path : "./server"
-        smartRun: false
-        pattern: 
-          - "./test/**/*.ts"
-        framework : jest
-        runPreRunEveryTime: true
-        preRun:
-          env:
-            FORCE_COLOR: true
-            NODE_OPTIONS: "--max-old-space-size=8096"
-            LOCKBOX_MASTER_KEY: lockbox-master-key
-            SECRET_KEY_BASE: secrret-key-base
-            PG_HOST: localhost
-            PG_PORT: 5432
-            PG_USER: postgres
-            PG_PASS: postgres
-            PG_DB: tooljet_test
-            POSTGRES_PASSWORD: postgres
-            NODE_ENV: test
-          command:
-            - apt install postgresql-13 build-essential -y
-            - /etc/init.d/postgresql start
-            - su -c "psql -c \"ALTER USER postgres PASSWORD 'postgres';\"" postgres
-            - npm install
-            - npm run db:create
-            - npm run db:migrate
-        configFile : "./test/jest-e2e.json"
-#       - name: unit-tests
+#       - name: e2e-tests      
 #         path : "./server"
 #         smartRun: false
 #         pattern: 
@@ -81,6 +53,32 @@ postMerge:
 #             - npm install
 #             - npm run db:create
 #             - npm run db:migrate
-#         configFile : "./jest.config.ts"
-
-
+#         configFile : "./test/jest-e2e.json"
+      - name: unit-tests
+        path : "./server"
+        smartRun: false
+        pattern: 
+          - "./test/**/*.ts"
+        framework : jest
+        runPreRunEveryTime: true
+        preRun:
+          env:
+            FORCE_COLOR: true
+            NODE_OPTIONS: "--max-old-space-size=8096"
+            LOCKBOX_MASTER_KEY: lockbox-master-key
+            SECRET_KEY_BASE: secrret-key-base
+            PG_HOST: localhost
+            PG_PORT: 5432
+            PG_USER: postgres
+            PG_PASS: postgres
+            PG_DB: tooljet_test
+            POSTGRES_PASSWORD: postgres
+            NODE_ENV: test
+          command:
+            - apt install postgresql-13 build-essential -y
+            - /etc/init.d/postgresql start
+            - su -c "psql -c \"ALTER USER postgres PASSWORD 'postgres';\"" postgres
+            - npm install
+            - npm run db:create
+            - npm run db:migrate
+        configFile : "./jest.config.ts"
