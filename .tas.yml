@@ -57,31 +57,15 @@ postMerge:
             POSTGRES_PASSWORD: tas
             NODE_ENV: test
           command:
-#             - cp /usr/local/bin/bundle /home/nucleus/bundle
+            - chmod 777 /usr/local/bin/bundle
             - apt install postgresql-13 sudo -y
             - apt install build-essential -y
-            - echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/13/main/pg_hba.conf
-            - echo "listen_addresses='*'" >> /etc/postgresql/13/main/postgresql.conf
             - /etc/init.d/postgresql start
-#             - /usr/lib/postgresql/13/bin/postgres -D /var/lib/postgresql/13/main -c config_file=/etc/postgresql/13/main/postgresql.conf
-            - sudo psql --command "CREATE USER tas WITH SUPERUSER PASSWORD 'tas';"
-             - /etc/init.d/postgresql reload
-#             - sudo -u postgres psql -c "CREATE USER tas WITH SUPERUSER PASSWORD 'tas';"
-#             - CREATE USER runner WITH PASSWORD '$password' CREATEDB;
-#             - psql ALTER USER postgres PASSWORD 'postgres';
-#             - su -c "psql -c \"ALTER USER postgres PASSWORD 'postgres';\"" postgres
-#             - npm i -g npm@7.20.0
+            - su -c "psql -c \"ALTER USER postgres PASSWORD 'postgres';\"" postgres
             - npm install
-#             - npm install jest-cli
             - npm run db:create
             - npm run db:migrate
-#             - sudo -u root ls
-#             - rm -rf /usr/local/bin/bundle
-#             - touch /usr/local/bin/bundle
-            # - rm -rf /usr/local/bin/bundle
-            # - npm install yjs
-            # - npm install -g yjs
-            # - npm i --legacy-peer-deps @lambdatest/test-at-scale-jasmine-runner@~0.3.0 @lambdatest/test-at-scale-mocha-runner@~0.3.0 @lambdatest/test-at-scale-jest-runner@~0.3.0
+            - chmod +x /usr/local/bin/bundle
         configFile : "./jest.config.ts"
 
 
