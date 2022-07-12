@@ -30,12 +30,9 @@ postMerge:
         path : "./server"
         smartRun: false
         pattern: 
-          # - "./setup-postgres.js"
-          - "./test/**/*.ts"
+          - "./test/controllers/*.ts"
+          - "./test/services/*.ts"
         framework : jest
-#         parallelism: 4
-#         splitMode: file
-        # nodeVersion: 14.17.3
         runPreRunEveryTime: true
         preRun:
           env:
