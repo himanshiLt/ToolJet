@@ -18,6 +18,7 @@ postMerge:
        NODE_ENV: test
      command:
 #         - cp /usr/local/bin/bundle /home/nucleus/bundle
+        - /usr/local/bin/bundle --ping
         - apt update
         - apt install build-essential -y
         # - apt install postgresql -y
@@ -29,6 +30,7 @@ postMerge:
         - npm --prefix plugins run create:client && npm --prefix plugins run create:server
         - npm --prefix plugins run build:packages && npm --prefix plugins run build:server
         - npm --prefix server install
+        - /usr/local/bin/bundle --ping
         # - npm --prefix server run db:create
         # - npm --prefix server run db:migrate
   subModules:
