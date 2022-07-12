@@ -136,16 +136,12 @@ export class UsersService {
     return { user, newUserCreated };
   }
 
-  async updateDefaultOrganization(user: User, organizationId: string) {
-    await this.usersRepository.update(user.id, { defaultOrganizationId: organizationId });
-  }
-
   async update(userId: string, params: any, manager?: EntityManager, organizationId?: string) {
     const { forgotPasswordToken, password, firstName, lastName, addGroups, removeGroups } = params;
 
     const hashedPassword = password ? bcrypt.hashSync(password, 10) : undefined;
 
-    const updateableParams = {
+    const updatableParams = {
       forgotPasswordToken,
       firstName,
       lastName,
@@ -153,16 +149,14 @@ export class UsersService {
     };
 
     // removing keys with undefined values
-    cleanObject(updateableParams);
+    cleanObject(updatableParams);
 
     let user: User;
 
     const performUpdateInTransaction = async (manager) => {
-      await manager.update(User, userId, { ...updateableParams });
+      await manager.update(User, userId, updatableParams);
       user = await manager.findOne(User, { where: { id: userId } });
-
       await this.removeUserGroupPermissionsIfExists(manager, user, removeGroups, organizationId);
-
       await this.addUserGroupPermissions(manager, user, addGroups, organizationId);
     };
 
@@ -175,6 +169,13 @@ export class UsersService {
     }
 
     return user;
+  }
+
+  async updateUser(userId: string, updatableParams: Partial<User>) {
+    if (updatableParams.password) {
+      updatableParams.password = bcrypt.hashSync(updatableParams.password, 10);
+    }
+    await this.usersRepository.update(userId, updatableParams);
   }
 
   async addUserGroupPermissions(manager: EntityManager, user: User, addGroups: string[], organizationId?: string) {
@@ -272,6 +273,9 @@ export class UsersService {
       case 'Folder':
         return await this.canUserPerformActionOnFolder(user, action);
 
+      case 'OrgEnvironmentVariable':
+        return await this.canUserPerformActionOnEnvironmentVariable(user, action);
+
       default:
         return false;
     }
@@ -316,6 +320,36 @@ export class UsersService {
         break;
       case 'delete':
         permissionGrant = this.canAnyGroupPerformAction('folderDelete', await this.groupPermissions(user));
+        break;
+      default:
+        permissionGrant = false;
+        break;
+    }
+
+    return permissionGrant;
+  }
+
+  async canUserPerformActionOnEnvironmentVariable(user: User, action: string): Promise<boolean> {
+    let permissionGrant: boolean;
+
+    switch (action) {
+      case 'create':
+        permissionGrant = this.canAnyGroupPerformAction(
+          'orgEnvironmentVariableCreate',
+          await this.groupPermissions(user)
+        );
+        break;
+      case 'update':
+        permissionGrant = this.canAnyGroupPerformAction(
+          'orgEnvironmentVariableUpdate',
+          await this.groupPermissions(user)
+        );
+        break;
+      case 'delete':
+        permissionGrant = this.canAnyGroupPerformAction(
+          'orgEnvironmentVariableDelete',
+          await this.groupPermissions(user)
+        );
         break;
       default:
         permissionGrant = false;

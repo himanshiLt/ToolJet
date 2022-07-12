@@ -13,7 +13,10 @@ export const Tabs = function Tabs({
   removeComponent,
   setExposedVariable,
   fireEvent,
+  styles,
 }) {
+  const { tabWidth } = styles;
+
   const widgetVisibility = component.definition.styles?.visibility?.value ?? true;
   const disabledState = component.definition.styles?.disabledState?.value ?? false;
   const defaultTab = component.definition.properties.defaultTab.value;
@@ -68,6 +71,22 @@ export const Tabs = function Tabs({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentState, currentTab]);
 
+  function computeTabVisibility(componentId, id) {
+    let tabVisibility = 'hidden';
+    if (id !== currentTab) {
+      return tabVisibility;
+    }
+
+    const tabElement = document.getElementById(`${componentId}-${id}`);
+    if (tabElement) {
+      if (window.getComputedStyle(tabElement).visibility === 'hidden') {
+        return 'hidden';
+      }
+    }
+
+    return id === currentTab ? 'visible' : 'hidden';
+  }
+
   return (
     <div
       data-disabled={parsedDisabledState}
@@ -82,9 +101,10 @@ export const Tabs = function Tabs({
         {parsedTabs.map((tab) => (
           <li
             className="nav-item"
+            style={{ opacity: tab?.disabled && '0.5', width: tabWidth == 'split' && '33.3%' }}
             onClick={() => {
-              setCurrentTab(tab.id);
-              setExposedVariable('currentTab', tab.id).then(() => fireEvent('onTabSwitch'));
+              !tab?.disabled && setCurrentTab(tab.id);
+              !tab?.disabled && setExposedVariable('currentTab', tab.id).then(() => fireEvent('onTabSwitch'));
             }}
             key={tab.id}
           >
@@ -93,6 +113,7 @@ export const Tabs = function Tabs({
               style={{
                 color: currentTab == tab.id && parsedHighlightColor,
                 borderBottom: currentTab == tab.id && `1px solid ${parsedHighlightColor}`,
+                overflowWrap: 'anywhere',
               }}
               ref={(el) => {
                 if (el && currentTab == tab.id) {
@@ -119,7 +140,7 @@ export const Tabs = function Tabs({
           <div
             className={`tab-pane active`}
             style={{
-              visibility: tab.id === currentTab ? 'visible' : 'hidden',
+              visibility: computeTabVisibility(id, tab.id),
               height: parsedHideTabs ? height : height - 41,
               position: 'absolute',
               top: parsedHideTabs ? '0px' : '41px',
