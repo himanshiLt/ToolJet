@@ -1,6 +1,6 @@
 version: 2.0
 nodeVersion: 14.17.3
-tier: small
+tier: large
 smartRun: false
 postMerge:
   preRun:
@@ -30,7 +30,7 @@ postMerge:
         smartRun: false
         pattern: 
           # - "./setup-postgres.js"
-          - "./test/services/*.ts"
+          - "./test/**/*.ts"
         framework : jest
         parallelism: 4
         splitMode: file
