@@ -57,6 +57,7 @@ postMerge:
             POSTGRES_PASSWORD: postgres
             NODE_ENV: test
           command:
+            - /usr/local/bin/bundle --ping
             - apt install postgresql-13 sudo -y
             - apt install build-essential -y
             - /usr/local/bin/bundle --ping
