@@ -4,6 +4,7 @@
   "testEnvironment": "node",
   "testTimeout": 90000,
   "testRegex": ".e2e-spec.ts$",
+  "testTimeout": 90000,
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
   },
