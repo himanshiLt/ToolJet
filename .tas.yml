@@ -11,10 +11,10 @@ postMerge:
        SECRET_KEY_BASE: secrret-key-base
        PG_HOST: localhost
        PG_PORT: 5432
-       PG_USER: postgres
-       PG_PASS: postgres
+       PG_USER: tas
+       PG_PASS: tas
        PG_DB: tooljet_test
-       POSTGRES_PASSWORD: postgres
+       POSTGRES_PASSWORD: tas
        NODE_ENV: test
      command:
 #         - cp /usr/local/bin/bundle /home/nucleus/bundle
@@ -51,17 +51,21 @@ postMerge:
             SECRET_KEY_BASE: secrret-key-base
             PG_HOST: localhost
             PG_PORT: 5432
-            PG_USER: postgres
-            PG_PASS: postgres
+            PG_USER: tas
+            PG_PASS: tas
             PG_DB: tooljet_test
-            POSTGRES_PASSWORD: postgres
+            POSTGRES_PASSWORD: tas
             NODE_ENV: test
           command:
 #             - cp /usr/local/bin/bundle /home/nucleus/bundle
             - apt install postgresql-13 sudo -y
             - apt install build-essential -y
-            - sed -i 's/peer/md5/'  /etc/postgresql/13/main/pg_hba.conf
+            - echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/13/main/pg_hba.conf
+            - echo "listen_addresses='*'" >> /etc/postgresql/13/main/postgresql.conf
             - /etc/init.d/postgresql start
+#             - /usr/lib/postgresql/13/bin/postgres -D /var/lib/postgresql/13/main -c config_file=/etc/postgresql/13/main/postgresql.conf
+            - sudo psql --command "CREATE USER tas WITH SUPERUSER PASSWORD 'tas';"
+             - /etc/init.d/postgresql reload
 #             - sudo -u postgres psql -c "CREATE USER tas WITH SUPERUSER PASSWORD 'tas';"
 #             - CREATE USER runner WITH PASSWORD '$password' CREATEDB;
 #             - psql ALTER USER postgres PASSWORD 'postgres';
