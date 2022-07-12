@@ -17,20 +17,13 @@ postMerge:
        POSTGRES_PASSWORD: postgres
        NODE_ENV: test
      command:
-        - /usr/local/bin/bundle --ping
         - apt update
         - apt install build-essential -y
-        # - apt install postgresql -y
-        # - apt install postgresql-contrib -y
-        # - /etc/init.d/postgresql start
-        # - su -c "psql -c \"ALTER USER postgres PASSWORD 'postgres';\"" postgres
         - npm i -g npm@7.20.0
         - npm --prefix plugins install
         - npm --prefix plugins run create:client && npm --prefix plugins run create:server
         - npm --prefix plugins run build:packages && npm --prefix plugins run build:server
         - npm --prefix server install
-        # - npm --prefix server run db:create
-        # - npm --prefix server run db:migrate
   subModules:
       - name: server      
         path : "./server"
@@ -39,7 +32,7 @@ postMerge:
           # - "./setup-postgres.js"
           - "./test/services/*.ts"
         framework : jest
-        parallelism: 2
+        parallelism: 4
         splitMode: file
         # nodeVersion: 14.17.3
         runPreRunEveryTime: true
@@ -57,14 +50,12 @@ postMerge:
             POSTGRES_PASSWORD: postgres
             NODE_ENV: test
           command:
-            - /usr/local/bin/bundle --ping
             - apt install postgresql-13 build-essential -y
             - /etc/init.d/postgresql start
             - su -c "psql -c \"ALTER USER postgres PASSWORD 'postgres';\"" postgres
             - npm install
             - npm run db:create
             - npm run db:migrate
-            - /usr/local/bin/bundle --ping
         configFile : "./jest.config.ts"
 
 
