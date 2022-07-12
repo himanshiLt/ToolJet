@@ -6,7 +6,7 @@ postMerge:
   preRun:
      env:
        FORCE_COLOR: true
-#        NODE_OPTIONS: "--max-old-space-size=8096"
+       NODE_OPTIONS: "--max-old-space-size=8096"
        LOCKBOX_MASTER_KEY: lockbox-master-key
        SECRET_KEY_BASE: secrret-key-base
        PG_HOST: localhost
@@ -39,7 +39,7 @@ postMerge:
         preRun:
           env:
             FORCE_COLOR: true
-#             NODE_OPTIONS: "--max-old-space-size=8096"
+            NODE_OPTIONS: "--max-old-space-size=8096"
             LOCKBOX_MASTER_KEY: lockbox-master-key
             SECRET_KEY_BASE: secrret-key-base
             PG_HOST: localhost
