@@ -60,7 +60,7 @@ postMerge:
 #             - cp /usr/local/bin/bundle /home/nucleus/bundle
             - apt install postgresql-13 sudo -y
             - apt install build-essential -y
-            - sed -i 's/peer/trust/'  /etc/postgresql/13/main/pg_hba.conf
+            - sed -i 's/peer/md5/'  /etc/postgresql/13/main/pg_hba.conf
             - /etc/init.d/postgresql start
 #             - sudo -u postgres psql -c "CREATE USER tas WITH SUPERUSER PASSWORD 'tas';"
 #             - CREATE USER runner WITH PASSWORD '$password' CREATEDB;
