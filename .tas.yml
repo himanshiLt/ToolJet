@@ -54,7 +54,6 @@ postMerge:
             - npm run db:create
             - npm run db:migrate
         configFile : "./test/jest-e2e.json"
-        parallelism: 2
 #       - name: unit-tests
 #         path : "./server"
 #         smartRun: false
