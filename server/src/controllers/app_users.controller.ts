@@ -13,7 +13,7 @@ export class AppUsersController {
     private appsAbilityFactory: AppsAbilityFactory
   ) {}
 
-  // TODO: remove deprecated
+  // TODO: remove deprecate
   @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Request() req) {
