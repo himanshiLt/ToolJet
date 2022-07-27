@@ -17,6 +17,7 @@ describe('app_users controller', () => {
     await request(app.getHttpServer()).post('/api/app_users').expect(401);
   });
 
+  
   xit('should be able to create a new app user if admin of same organization', async () => {
     const adminUserData = await createUser(app, {
       email: 'admin@tooljet.io',
